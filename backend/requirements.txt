@@ -1,0 +1,6 @@
+fastapi
+numpy
+opencv-python
+pillow
+python-multipart
+uvicorn==0.16.0

@@ -1,0 +1,32 @@
+version: '3'
+
+
+services:
+
+  openpose_frontend:
+    image: dcbark01/openpose_frontend
+    build:
+      context: ./frontend
+    ports:
+      - 8501:8501
+    depends_on:
+      - backend
+    volumes:
+      - ./storage:/storage
+
+  openpose_backend:
+    image: dcbark01/openpose_backend
+    build:
+      context: ./backend
+    ports:
+      - 8081:8081
+    runtime: nvidia
+    environment:
+      - XAUTHORITY=/root/.Xauthority
+      - QT_X11_NO_MITSHM=1
+      - DISPLAY=$DISPLAY
+      - NVIDIA_VISIBLE_DEVICES=0
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority
+      - ./storage:/storage
